@@ -3,7 +3,7 @@
   "game": "Minecraft Java Edition 26.2",
   "server": {
     "name": "Valgharie",
-    "mode": "Survie (avec plugins)",
+    "mode": "Survie (sans plugins)",
     "maxPlayers": 20,
     "ip": "A_REMPLACER_PAR_IP_OU_DOMAINE_DU_SERVEUR",
     "statusApi": "https://api.mcsrvstat.us/3/A_REMPLACER_PAR_IP_OU_DOMAINE_DU_SERVEUR",
