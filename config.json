@@ -1,0 +1,24 @@
+{
+  "site": "Valgharie",
+  "game": "Minecraft Java Edition 26.2",
+  "server": {
+    "name": "Valgharie",
+    "mode": "Survie (avec plugins)",
+    "maxPlayers": 20,
+    "ip": "A_REMPLACER_PAR_IP_OU_DOMAINE_DU_SERVEUR",
+    "statusApi": "https://api.mcsrvstat.us/3/A_REMPLACER_PAR_IP_OU_DOMAINE_DU_SERVEUR",
+    "refreshSeconds": 15
+  },
+  "defaultCredentials": {
+    "username": "2026",
+    "password": "2026"
+  },
+  "profiles": [
+    "Arlexen",
+    "ViewelValghar",
+    "Routier87",
+    "Le Doc Sensei",
+    "N3R0X"
+  ],
+  "notes": "Le statut live utilise une API de statut Minecraft Java. Pour Minecraft Realms, il faut remplacer ce mécanisme par une intégration/backend adapté à l'accès disponible au Realm."
+}

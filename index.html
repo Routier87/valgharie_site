@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Serveur Valgharie — Minecraft Java Edition 26.2">
+  <title>Valgharie — Minecraft Java Edition 26.2</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="background"></div>
+  <div class="overlay"></div>
+
+  <header class="topbar">
+    <div class="brand">
+      <div class="grass-block">■</div>
+      <div>
+        <strong>VALGHARIE</strong>
+        <span>Minecraft Java Edition 26.2</span>
+      </div>
+    </div>
+
+    <nav class="main-nav">
+      <button class="nav-btn active" data-page="accueil">⌂ <span>Accueil</span></button>
+      <button class="nav-btn" data-page="profils">♙ <span>Profils</span></button>
+      <button class="nav-btn" data-page="usines">▦ <span>Usines</span></button>
+      <button class="nav-btn" data-page="salon">● <span>Salon</span></button>
+      <button class="nav-btn" data-page="parametres">⚙ <span>Paramètres</span></button>
+    </nav>
+
+    <div id="topProfiles" class="top-profiles"></div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-copy">
+        <div class="minecraft-title">VALGHARIE</div>
+        <h1>Minecraft Java Edition 26.2</h1>
+        <h2>Le serveur Valgharie</h2>
+        <p>Construire <b>•</b> Explorer <b>•</b> Partager <b>•</b> Ensemble</p>
+      </div>
+      <div class="welcome-card glass">
+        <h3>💬 Bienvenue sur le serveur Valgharie</h3>
+        <p>Connecte-toi avec ton profil, gère tes usines, consulte celles des autres joueurs et échange dans le salon.</p>
+        <small>Bonne aventure à tous !</small>
+      </div>
+    </section>
+
+    <section id="page-accueil" class="page active">
+      <div class="layout-grid">
+        <aside class="left-column">
+          <div class="panel">
+            <div class="panel-title"><span>♙</span> Mes profils</div>
+            <div id="profileList"></div>
+            <button id="newProfileBtn" class="outline-btn">＋ Créer un nouveau profil</button>
+          </div>
+
+          <div class="panel">
+            <div class="panel-title"><span>⚙</span> Paramètres généraux</div>
+            <label>Style d'écriture
+              <select id="fontStyleSelect">
+                <option value="minecraft">Minecraft</option>
+                <option value="modern">Moderne</option>
+                <option value="pixel">Pixel</option>
+                <option value="classic">Classique</option>
+              </select>
+            </label>
+            <label>Identifiant
+              <input id="usernameInput" type="text">
+            </label>
+            <label>Mot de passe
+              <input id="passwordInput" type="password">
+            </label>
+            <button id="saveSettingsBtn" class="success-btn">⟳ Mettre à jour</button>
+            <div id="settingsMessage" class="status-message"></div>
+          </div>
+        </aside>
+
+        <section class="center-column">
+          <div id="profileCard" class="panel profile-card"></div>
+
+          <div class="panel">
+            <div class="tabs">
+              <button class="tab active" data-factory-filter="mine">Mes usines</button>
+              <button class="tab" data-factory-filter="all">Usines des autres</button>
+              <button class="tab" data-factory-filter="all">Carte du serveur</button>
+            </div>
+            <div id="factoryGrid" class="factory-grid"></div>
+            <div class="share-factory">
+              <div>
+                <strong>▦ Partage ton usine !</strong>
+                <span>Tu as une nouvelle construction ? Ajoute-la pour que tout le monde puisse la voir !</span>
+              </div>
+              <button id="addFactoryBtn" class="primary-btn">✎ Ajouter une usine</button>
+            </div>
+          </div>
+        </section>
+
+        <aside class="right-column">
+          <div class="panel chat-panel">
+            <div class="panel-title"><span>●</span> Salon du serveur</div>
+            <div id="chatMessages" class="chat-messages"></div>
+            <form id="chatForm" class="chat-form">
+              <input id="chatInput" placeholder="Écrire un message..." autocomplete="off">
+              <button aria-label="Envoyer">➤</button>
+            </form>
+          </div>
+
+          <div class="panel server-info">
+            <div class="panel-title"><span>▣</span> Informations serveur</div>
+            <p><b>Version :</b> Minecraft Java Edition 26.2</p>
+            <p><b>Mode :</b> Survie (avec plugins)</p>
+            <p><b>Statut :</b> <span id="liveServerStatus" class="live-server-status offline"><span>●</span> Serveur non configuré</span></p>
+            <p><b>Joueurs :</b> <span id="onlineCount">—</span> / 20</p>
+            <p><b>IP :</b> valgharie.server</p>
+            <div class="server-banner">VALGHARIE</div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="page-profils" class="page">
+      <div class="panel wide-panel">
+        <div class="section-heading">
+          <div>
+            <h2>Profils Valgharie</h2>
+            <p>Chaque joueur possède son profil, ses identifiants et ses usines.</p>
+          </div>
+          <button id="newProfileBtn2" class="primary-btn">＋ Nouveau profil</button>
+        </div>
+        <div id="profilesPageGrid" class="profiles-grid"></div>
+      </div>
+    </section>
+
+    <section id="page-usines" class="page">
+      <div class="panel wide-panel">
+        <div class="section-heading">
+          <div>
+            <h2>Toutes les usines</h2>
+            <p>Les constructions de tous les joueurs du serveur.</p>
+          </div>
+          <button id="addFactoryBtn2" class="primary-btn">✎ Ajouter une usine</button>
+        </div>
+        <div id="allFactoriesGrid" class="factory-grid"></div>
+      </div>
+    </section>
+
+    <section id="page-salon" class="page">
+      <div class="panel wide-panel chat-page">
+        <div class="section-heading">
+          <div>
+            <h2>Salon du serveur</h2>
+            <p>Un espace commun visible par tous les profils.</p>
+          </div>
+        </div>
+        <div id="chatMessagesLarge" class="chat-messages large"></div>
+        <form id="chatFormLarge" class="chat-form">
+          <input id="chatInputLarge" placeholder="Ex. Arlexen demande 12 stacks de fer..." autocomplete="off">
+          <button>➤ Envoyer</button>
+        </form>
+      </div>
+    </section>
+
+    <section id="page-parametres" class="page">
+      <div class="panel wide-panel settings-page">
+        <h2>Paramètres</h2>
+        <p>Les modifications sont sauvegardées automatiquement dans le navigateur.</p>
+        <div class="settings-grid">
+          <div>
+            <label>Profil actif
+              <select id="settingsProfileSelect"></select>
+            </label>
+            <label>Nom du profil
+              <input id="settingsDisplayName" type="text">
+            </label>
+            <label>Identifiant
+              <input id="settingsUsername" type="text">
+            </label>
+            <label>Nouveau mot de passe
+              <input id="settingsPassword" type="password">
+            </label>
+          </div>
+          <div>
+            <label>Style d'écriture
+              <select id="settingsFont">
+                <option value="minecraft">Minecraft</option>
+                <option value="modern">Moderne</option>
+                <option value="pixel">Pixel</option>
+                <option value="classic">Classique</option>
+              </select>
+            </label>
+            <button id="applyFullSettings" class="success-btn">✓ Enregistrer automatiquement</button>
+            <div class="notice">Prototype local : les données restent dans ce navigateur via localStorage. Pour un vrai site multi-utilisateur avec comptes sécurisés, il faudra ajouter un serveur/backend.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span>Serveur Valgharie</span>
+    <span>|</span>
+    <span>Minecraft Java Edition 26.2</span>
+    <span class="footer-right">Plus qu'un jeu... une aventure à plusieurs !</span>
+  </footer>
+
+  <dialog id="factoryDialog">
+    <form method="dialog" id="factoryForm" class="modal">
+      <h2>Ajouter une usine</h2>
+      <label>Nom de l'usine<input id="factoryName" required placeholder="Usine à fer"></label>
+      <label>Ressource<input id="factoryResource" required placeholder="Fer"></label>
+      <label>Coordonnées<input id="factoryCoords" placeholder="X: 128 Y: 64 Z: -342"></label>
+      <label>Image / chemin local<input id="factoryImage" placeholder="assets/usine-fer.jpg"></label>
+      <div class="modal-actions">
+        <button value="cancel" class="outline-btn">Annuler</button>
+        <button id="saveFactory" value="default" class="primary-btn">Ajouter</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="profileDialog">
+    <form method="dialog" id="profileForm" class="modal">
+      <h2>Créer un profil</h2>
+      <label>Nom du profil<input id="newProfileName" required placeholder="Arlexen"></label>
+      <label>Identifiant par défaut<input id="newProfileUsername" value="2026" required></label>
+      <label>Mot de passe par défaut<input id="newProfilePassword" value="2026" required></label>
+      <div class="modal-actions">
+        <button value="cancel" class="outline-btn">Annuler</button>
+        <button id="saveProfile" value="default" class="primary-btn">Créer</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="script.js"></script>
+</body>
+</html>
