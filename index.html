@@ -8,6 +8,49 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+  <section id="loginScreen" class="login-screen">
+    <div class="login-wrapper">
+      <div class="login-brand">
+        <div class="minecraft-title small">VALGHARIE</div>
+        <p>Minecraft Java Edition 26.2</p>
+      </div>
+
+      <div class="login-panel">
+        <div class="login-heading">
+          <span class="login-icon">♙</span>
+          <div>
+            <h1>Connexion au profil</h1>
+            <p>Choisis ton profil pour accéder au serveur Valgharie.</p>
+          </div>
+        </div>
+
+        <div id="loginProfiles" class="login-profiles"></div>
+
+        <div id="selectedProfileBox" class="selected-profile-box hidden">
+          <div id="selectedProfileAvatar" class="big-avatar">♙</div>
+          <div>
+            <strong id="selectedProfileName">Profil</strong>
+            <span>Connexion sécurisée</span>
+          </div>
+        </div>
+
+        <form id="loginForm" class="login-form">
+          <label>Identifiant
+            <input id="loginUsername" type="text" autocomplete="username" placeholder="Identifiant">
+          </label>
+          <label>Mot de passe
+            <input id="loginPassword" type="password" autocomplete="current-password" placeholder="Mot de passe">
+          </label>
+          <button type="submit" class="primary-btn login-btn">Se connecter</button>
+          <div id="loginError" class="login-error"></div>
+        </form>
+
+        <div class="login-default">Identifiant par défaut : <b>2026</b> · Mot de passe par défaut : <b>2026</b></div>
+      </div>
+    </div>
+  </section>
+
   <div class="background"></div>
   <div class="overlay"></div>
 
@@ -29,6 +72,7 @@
     </nav>
 
     <div id="topProfiles" class="top-profiles"></div>
+    <button id="logoutBtn" class="logout-btn">↪ Déconnexion</button>
   </header>
 
   <main>
@@ -109,7 +153,7 @@
           <div class="panel server-info">
             <div class="panel-title"><span>▣</span> Informations serveur</div>
             <p><b>Version :</b> Minecraft Java Edition 26.2</p>
-            <p><b>Mode :</b> Survie (avec plugins)</p>
+            <p><b>Mode :</b> Survie (sans plugins)</p>
             <p><b>Statut :</b> <span id="liveServerStatus" class="live-server-status offline"><span>●</span> Serveur non configuré</span></p>
             <p><b>Joueurs :</b> <span id="onlineCount">—</span> / 20</p>
             <p><b>IP :</b> valgharie.server</p>
