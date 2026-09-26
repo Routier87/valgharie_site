@@ -12,7 +12,7 @@ const defaultProfiles = [
   {
     "id": "arlexen",
     "name": "Arlexen",
-    "username": "arlexen",
+    "username": "Arlexen",
     "password": "2026",
     "style": "minecraft",
     "avatar": "🧑",
@@ -21,7 +21,7 @@ const defaultProfiles = [
   {
     "id": "viewelvalghar",
     "name": "ViewelValghar",
-    "username": "ViewelValghar",
+    "username": "viewelvalghar",
     "password": "2026",
     "style": "minecraft",
     "avatar": "🧑‍🌾",
@@ -57,14 +57,14 @@ const defaultProfiles = [
 ];
 
 const defaultChat = [
-  ["Arlexen","Salut tout le monde !"],
-  ["Routier87","salut a toi"],
-  ["Le Doc Sensei","salut les con :)"],
-  ["N3R0X","salut a vous les petit :)"],
-  ["ViewelValghar","salut les enfant :)"]
 ];
 
 let profiles = JSON.parse(localStorage.getItem("valgharie_profiles") || "null") || structuredClone(defaultProfiles);
+profiles = profiles.filter(p => ["Arlexen","ViewelValghar","Routier87","Le Doc Sensei","N3R0X"].includes(p.name));
+defaultProfiles.forEach(dp => {
+  if (!profiles.some(p => p.id === dp.id)) profiles.push(structuredClone(dp));
+});
+
 let factories = JSON.parse(localStorage.getItem("valgharie_factories") || "null") || structuredClone(defaultFactories);
 let chat = JSON.parse(localStorage.getItem("valgharie_chat") || "null") || structuredClone(defaultChat);
 let activeId = localStorage.getItem("valgharie_active") || "routier";
@@ -86,6 +86,103 @@ function applyFont(style) {
   if (style === "modern") document.body.classList.add("font-modern");
   if (style === "classic") document.body.classList.add("font-classic");
   if (style === "pixel") document.body.classList.add("font-pixel");
+}
+
+
+function renderLoginProfiles() {
+  const container = $("#loginProfiles");
+  if (!container) return;
+
+  container.innerHTML = profiles.map(p => `
+    <button type="button" class="login-profile-card" data-login-profile="${p.id}">
+      <div class="login-profile-avatar">${p.avatar}</div>
+      <strong>${escapeHtml(p.name)}</strong>
+      <span>● ${p.online ? "Connecté" : "Profil disponible"}</span>
+      <small class="profile-connect">Connexion du profil</small>
+    </button>
+  `).join("");
+
+  $$(".login-profile-card").forEach(card => {
+    card.onclick = () => selectLoginProfile(card.dataset.loginProfile);
+  });
+}
+
+function selectLoginProfile(id) {
+  const p = profiles.find(x => x.id === id);
+  if (!p) return;
+
+  activeId = p.id;
+  $$(".login-profile-card").forEach(card => {
+    card.classList.toggle("selected", card.dataset.loginProfile === id);
+  });
+
+  $("#selectedProfileBox").classList.remove("hidden");
+  $("#selectedProfileAvatar").textContent = p.avatar;
+  $("#selectedProfileName").textContent = p.name;
+  $("#loginUsername").value = "";
+  $("#loginPassword").value = "";
+  $("#loginUsername").focus();
+  $("#loginError").textContent = "";
+}
+
+function loginProfile(username, password) {
+  const p = profiles.find(x => x.id === activeId);
+  if (!p) {
+    $("#loginError").textContent = "Sélectionne d'abord un profil.";
+    return false;
+  }
+
+  if (username === p.username && password === p.password) {
+    localStorage.setItem("valgharie_session", p.id);
+    p.online = true;
+    save();
+    unlockSite();
+    return true;
+  }
+
+  $("#loginError").textContent = "Identifiant ou mot de passe incorrect.";
+  return false;
+}
+
+function unlockSite() {
+  $("#loginScreen")?.classList.add("hidden");
+  document.body.classList.remove("locked");
+  applyFont(activeProfile().style);
+  renderAll();
+  refreshServerStatus();
+}
+
+function lockSite() {
+  localStorage.removeItem("valgharie_session");
+  $("#loginScreen")?.classList.remove("hidden");
+  document.body.classList.add("locked");
+  renderLoginProfiles();
+  const sessionId = localStorage.getItem("valgharie_session");
+  if (sessionId) selectLoginProfile(sessionId);
+}
+
+function initLogin() {
+  renderLoginProfiles();
+
+  const sessionId = localStorage.getItem("valgharie_session");
+  if (sessionId && profiles.some(p => p.id === sessionId)) {
+    activeId = sessionId;
+    unlockSite();
+  } else {
+    document.body.classList.add("locked");
+    $("#loginScreen")?.classList.remove("hidden");
+  }
+
+  $("#loginForm").onsubmit = e => {
+    e.preventDefault();
+    loginProfile($("#loginUsername").value.trim(), $("#loginPassword").value);
+  };
+
+  $("#logoutBtn").onclick = () => {
+    activeProfile().online = false;
+    save();
+    lockSite();
+  };
 }
 
 function renderTopProfiles() {
@@ -353,6 +450,5 @@ function escapeHtml(value) {
 }
 
 applyFont(activeProfile().style);
-renderAll();
-refreshServerStatus();
+initLogin();
 setInterval(refreshServerStatus, CONFIG.refreshSeconds * 1000);
