@@ -20,5 +20,12 @@
     "Le Doc Sensei",
     "N3R0X"
   ],
-  "notes": "Le statut live utilise une API de statut Minecraft Java. Pour Minecraft Realms, il faut remplacer ce mécanisme par une intégration/backend adapté à l'accès disponible au Realm."
+  "notes": "Le statut live utilise une API de statut Minecraft Java. Pour Minecraft Realms, il faut remplacer ce mécanisme par une intégration/backend adapté à l'accès disponible au Realm.",
+  "authentication": {
+    "mode": "localStorage prototype",
+    "defaultUsername": "2026",
+    "defaultPassword": "2026",
+    "loginPage": true,
+    "sessionStorageKey": "valgharie_session"
+  }
 }
